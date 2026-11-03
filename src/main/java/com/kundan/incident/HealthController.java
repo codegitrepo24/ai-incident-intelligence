@@ -9,13 +9,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class HealthController {
+    
+    public final HealthService healthService;
+
+    public HealthController(HealthService healthService){
+        this.healthService = healthService;
+    }
 
     @GetMapping("/health")
     public Map<String, String> checkHealth() {
-        return Map.of(
-                "status", "UP",
-                "application", "AI Incident Intelligence"
-        );
+        return healthService.getHealthStatus();
+    }
+
+    @GetMapping("/application-name")
+    public Map<String, String> getApplicationName() {
+        return healthService.getApplicationName();
     }
 
 }
